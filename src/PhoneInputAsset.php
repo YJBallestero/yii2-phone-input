@@ -1,12 +1,13 @@
 <?php
 
-namespace borales\extensions\phoneInput;
+namespace yjballestero\extensions\phoneInput;
 
 use yii\web\AssetBundle;
+use yii\web\JqueryAsset;
 
 /**
  * Asset Bundle of the phone input widget. Registers required CSS and JS files.
- * @package borales\extensions\phoneInput
+ * @package yjballestero\extensions\phoneInput
  */
 class PhoneInputAsset extends AssetBundle
 {
@@ -17,8 +18,8 @@ class PhoneInputAsset extends AssetBundle
     /** @var array */
     public $js = [
         'build/js/utils.js',
-        'build/js/intlTelInput-jquery.js',
+        'build/js/intlTelInput.js',
     ];
     /** @var array */
-    public $depends = ['yii\web\JqueryAsset'];
+    public $depends = [JqueryAsset::class];
 }

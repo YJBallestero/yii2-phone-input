@@ -1,4 +1,4 @@
-The "borales/yii2-phone-input" is free software.
+The "yjballestero/yii2-phone-input" is free software.
 It is released under the terms of the following BSD License.
 
 Copyright © 2014 by Alexandr Bordun. All rights reserved.

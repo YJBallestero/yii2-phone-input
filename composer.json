@@ -1,5 +1,5 @@
 {
-    "name": "borales/yii2-phone-input",
+    "name": "yjballestero/yii2-phone-input",
     "description": "Yii2 International telephone numbers - Asset Bundle, Behavior, Validator, Widget",
     "keywords": [
         "yii2",
@@ -8,29 +8,52 @@
         "libphonenumber"
     ],
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "license": "BSD-3-Clause",
     "type": "yii2-extension",
-    "homepage": "https://github.com/Borales/yii2-phone-input",
+    "homepage": "https://github.com/YJBallestero/yii2-phone-input",
     "support": {
-        "issues": "https://github.com/Borales/yii2-phone-input/issues?state=open",
-        "source": "https://github.com/Borales/yii2-phone-input"
+        "issues": "https://github.com/YJBallestero/yii2-phone-input/issues?state=open",
+        "source": "https://github.com/YJBallestero/yii2-phone-input"
     },
-    "authors": [{
-        "name": "Borales (Alexandr Bordun)",
-        "email": "bordun.alexandr@gmail.com"
-    }],
+    "authors": [
+        {
+            "name": "Borales (Alexandr Bordun)",
+            "email": "bordun.alexandr@gmail.com"
+        },
+        {
+            "name": "Yanis Ballestero",
+            "email": "yjballestero@gmail.com",
+            "role": "Developer",
+            "homepage": "https://yjballestero.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
-            "borales\\extensions\\phoneInput\\": "src/"
+            "yjballestero\\extensions\\phoneInput\\": "src/"
         }
     },
-    "repositories": [{
-        "type": "composer",
-        "url": "https://asset-packagist.org"
-    }],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
     "require": {
-        "bower-asset/intl-tel-input": "^16",
-        "giggsey/libphonenumber-for-php": "^8",
-        "yiisoft/yii2": ">=2.0.1"
+        "php": ">=8.1.0",
+        "giggsey/libphonenumber-for-php": "^8.0@dev",
+        "yiisoft/yii2": "~2.0.45",
+        "jackocnr/intl-tel-input": ">=20.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    },
+    "config": {
+        "platform": {
+            "php": "8.1.4"
+        },
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        }
     }
 }

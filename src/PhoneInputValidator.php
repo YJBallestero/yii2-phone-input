@@ -1,41 +1,40 @@
 <?php
 
-namespace borales\extensions\phoneInput;
+namespace yjballestero\extensions\phoneInput;
 
+use Yii;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberUtil;
 use libphonenumber\PhoneNumberType;
 use yii\validators\Validator;
-use yii\helpers\Html;
 use yii\helpers\Json;
 
 /**
  * Validates the given attribute value with the PhoneNumberUtil library.
- * @package borales\extensions\phoneInput
+ * @package yjballestero\extensions\phoneInput
  */
 class PhoneInputValidator extends Validator
 {
     /**
      * @var mixed
      */
-    public $region;
+    public mixed $region;
     /**
-     * @var integer
+     * @var integer|null
      */
-    public $type;
-    
+    public ?int $type;
+
     /**
      * @var string
      */
-    public $default_region;
+    public string $default_region;
 
     /**
-     * @inheritdoc
+     * @return void
      */
-    public function init()
-    {
+    public function init(): void {
         if (!$this->message) {
-            $this->message = \Yii::t('yii', 'The format of {attribute} is invalid.');
+            $this->message = Yii::t('yii', 'The format of {attribute} is invalid.');
         }
         parent::init();
     }
@@ -44,11 +43,11 @@ class PhoneInputValidator extends Validator
      * @param mixed $value
      * @return array|null
      */
-    protected function validateValue($value)
-    {
+    protected function validateValue($value): ?array {
         $valid = false;
         $phoneUtil = PhoneNumberUtil::getInstance();
         try {
+            /** @var \libphonenumber\PhoneNumber $phoneProto */
             $phoneProto = $phoneUtil->parse($value, $this->default_region);
 
             if ($this->region !== null) {
@@ -59,16 +58,12 @@ class PhoneInputValidator extends Validator
                         break;
                     }
                 }
-            } else {
-                if ($phoneUtil->isValidNumber($phoneProto)) {
-                    $valid = true;
-                }
+            } else if ($phoneUtil->isValidNumber($phoneProto)) {
+                $valid = true;
             }
 
-            if ($this->type !== null) {
-                if (PhoneNumberType::UNKNOWN != $type = $phoneUtil->getNumberType($phoneProto)) {
-                    $valid = $valid && $type == $this->type;
-                }
+            if (($this->type !== null) && PhoneNumberType::UNKNOWN !== $type = $phoneUtil->getNumberType($phoneProto)) {
+                $valid = $valid && $type === $this->type;
             }
 
         } catch (NumberParseException $e) {
@@ -79,19 +74,20 @@ class PhoneInputValidator extends Validator
     /**
      * @inheritdoc
      */
-    public function clientValidateAttribute($model, $attribute, $view) {
+    public function clientValidateAttribute($model, $attribute, $view): ?string {
 
         $options = Json::htmlEncode([
-            'message' => \Yii::$app->getI18n()->format($this->message, [
+            'message' => Yii::$app->getI18n()->format($this->message, [
                 'attribute' => $model->getAttributeLabel($attribute)
-            ], \Yii::$app->language)
+            ], Yii::$app->language)
         ]);
 
         return <<<JS
-var options = $options, telInput = $(attribute.input);;
+var options = $options,
+    telInput = $(attribute.input);
 
-if($.trim(telInput.val())){
-    if(!telInput.intlTelInput("isValidNumber")){
+if ($.trim(telInput.val())) {
+    if (!telInput.intlTelInput("isValidNumber")) {
         messages.push(options.message);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace borales\extensions\phoneInput;
+namespace yjballestero\extensions\phoneInput;
 
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -9,22 +9,26 @@ use yii\widgets\InputWidget;
 
 /**
  * Widget of the phone input
- * @package borales\extensions\phoneInput
+ *
+ * @package yjballestero\extensions\phoneInput
  */
 class PhoneInput extends InputWidget
 {
     /** @var string HTML tag type of the widget input ("tel" by default) */
-    public $htmlTagType = 'tel';
+    public string $htmlTagType = 'tel';
     /** @var array Default widget options of the HTML tag */
-    public $defaultOptions = ['autocomplete' => "off",'class'=>'form-control'];
+    public array $defaultOptions = ['autocomplete' => "off", 'class' => 'form-control'];
     /**
      * @link https://github.com/jackocnr/intl-tel-input#options More information about JS-widget options.
      * @var array Options of the JS-widget
      */
-    public $jsOptions = [];
+    public array $jsOptions = [];
 
-    public function init()
-    {
+    /**
+     * @throws \yii\base\InvalidConfigException
+     * @throws \Exception
+     */
+    public function init(): void {
         parent::init();
         PhoneInputAsset::register($this->view);
         $id = ArrayHelper::getValue($this->options, 'id');
@@ -40,12 +44,8 @@ JS;
             $js = <<<JS
 (function ($) {
     "use strict";
-    $('#$id')
-    .parents('form')
-    .on('submit', function() {
-        $('#$id')
-        .val($('#$id')
-        .intlTelInput('getNumber'));
+    $('#$id').parents('form').on('submit', function() {
+        $('#$id').val($('#$id').intlTelInput('getNumber'));
     });
 })(jQuery);
 JS;
@@ -56,12 +56,12 @@ JS;
     /**
      * @return string
      */
-    public function run()
-    {
+    public function run(): string {
         $options = ArrayHelper::merge($this->defaultOptions, $this->options);
         if ($this->hasModel()) {
             return Html::activeInput($this->htmlTagType, $this->model, $this->attribute, $options);
         }
+
         return Html::input($this->htmlTagType, $this->name, $this->value, $options);
     }
 }
