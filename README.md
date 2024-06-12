@@ -11,7 +11,7 @@ Yii2 International telephone numbers - Asset Bundle, Behavior, Validator, Widget
 
 This extension uses:
 
-* PHP 8.1+.
+* PHP 8.0+.
 * Yii2 2.0.45+
 
 - [A jQuery plugin for entering and validating international telephone numbers](https://github.com/Bluefieldscom/intl-tel-input)

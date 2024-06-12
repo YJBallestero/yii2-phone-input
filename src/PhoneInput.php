@@ -54,7 +54,7 @@ class PhoneInput extends InputWidget
     let input = document.querySelector("#$id"),
         iti = intlTelInput(input, $jsOptions);
     if ($hasModel){
-        console.info(iti.getNumber())
+        // console.info(iti.getNumber())
         $("#$id").parents('form').on('submit',function(){
             $("#$id").val(iti.getNumber());
         });
