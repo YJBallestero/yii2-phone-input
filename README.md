@@ -44,7 +44,7 @@ to the `require` section of your `composer.json` file.
 Using as an `ActiveField` widget with the preferred countries on the top:
 
 ```php
-use yjballestero\extensions\phoneInput\PhoneInput;
+use yjballestero\phoneInput\PhoneInput;
 
 echo $form->field($model, 'phone_number')->widget(PhoneInput::className(), [
     'jsOptions' => [
@@ -56,7 +56,7 @@ echo $form->field($model, 'phone_number')->widget(PhoneInput::className(), [
 Using as a simple widget with the limited countries list:
 
 ```php
-use yjballestero\extensions\phoneInput\PhoneInput;
+use yjballestero\phoneInput\PhoneInput;
 
 echo PhoneInput::widget([
     'name' => 'phone_number',
@@ -72,7 +72,7 @@ Using phone validator in a model (validates the correct country code and phone f
 ```php
 namespace frontend\models;
 
-use yjballestero\extensions\phoneInput\PhoneInputValidator;
+use yjballestero\phoneInput\PhoneInputValidator;
 
 class Company extends Model
 {
@@ -93,7 +93,7 @@ or if you need to validate phones of some countries:
 ```php
 namespace frontend\models;
 
-use yjballestero\extensions\phoneInput\PhoneInputValidator;
+use yjballestero\phoneInput\PhoneInputValidator;
 
 class Company extends Model
 {
@@ -115,7 +115,7 @@ Using phone behavior in a model (auto-formats phone string to the required phone
 ```php
 namespace frontend\models;
 
-use yjballestero\extensions\phoneInput\PhoneInputBehavior;
+use yjballestero\phoneInput\PhoneInputBehavior;
 
 class Company extends Model
 {
@@ -130,13 +130,13 @@ class Company extends Model
 }
 ```
 
-You can also thanks to this behavior save to database country code of the phone number. Just add your attribute as
-`countryCodeAttribute` and it'll be inserted into database with the phone number.
+Thanks to this behavior, you can also save the country code of the phone number in the database. Just add your attribute like
+`countryCodeAttribute` and it will be inserted into the database with the phone number.
 
 ```php
 namespace frontend\models;
 
-use yjballestero\extensions\phoneInput\PhoneInputBehavior;
+use yjballestero\phoneInput\PhoneInputBehavior;
 
 class Company extends Model
 {

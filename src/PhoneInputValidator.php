@@ -1,6 +1,6 @@
 <?php
 
-namespace yjballestero\extensions\phoneInput;
+namespace yjballestero\phoneInput;
 
 use Yii;
 use libphonenumber\NumberParseException;
@@ -11,7 +11,7 @@ use yii\helpers\Json;
 
 /**
  * Validates the given attribute value with the PhoneNumberUtil library.
- * @package yjballestero\extensions\phoneInput
+ * @package yjballestero\phoneInput
  */
 class PhoneInputValidator extends Validator
 {
@@ -83,8 +83,8 @@ class PhoneInputValidator extends Validator
         ]);
 
         return <<<JS
-var options = $options,
-    telInput = $(attribute.input);
+let telInput = $(attribute.input),
+    options = $options ;
 
 if ($.trim(telInput.val())) {
     if (!telInput.intlTelInput("isValidNumber")) {

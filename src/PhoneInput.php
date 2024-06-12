@@ -1,7 +1,9 @@
 <?php
 
-namespace yjballestero\extensions\phoneInput;
+namespace yjballestero\phoneInput;
 
+use Yii;
+use Exception;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -10,7 +12,7 @@ use yii\widgets\InputWidget;
 /**
  * Widget of the phone input
  *
- * @package yjballestero\extensions\phoneInput
+ * @package yjballestero\phoneInput
  */
 class PhoneInput extends InputWidget
 {
@@ -30,27 +32,37 @@ class PhoneInput extends InputWidget
      */
     public function init(): void {
         parent::init();
-        PhoneInputAsset::register($this->view);
+        Yii::setAlias('extIntlTelInput', "@vendor/jackocnr/intl-tel-input");
+        $asset = PhoneInputAsset::register($this->view);
         $id = ArrayHelper::getValue($this->options, 'id');
+
+        if ($_utilUrl = Yii::$app->assetManager->getActualAssetUrl($asset, $asset->js[0])) {
+            $this->jsOptions['utilsScript'] = $_utilUrl;
+        }
+
         $jsOptions = $this->jsOptions ? Json::encode($this->jsOptions) : "";
+        try {
+            $hasModel = json_encode($this->hasModel(), JSON_THROW_ON_ERROR);
+
+        } catch (Exception $exception) {
+            $hasModel = false;
+        }
+
         $jsInit = <<<JS
 (function ($) {
     "use strict";
-    $('#$id').intlTelInput($jsOptions);
+    let input = document.querySelector("#$id"),
+        iti = intlTelInput(input, $jsOptions);
+    if ($hasModel){
+        console.info(iti.getNumber())
+        $("#$id").parents('form').on('submit',function(){
+            $("#$id").val(iti.getNumber());
+        });
+    }
 })(jQuery);
 JS;
         $this->view->registerJs($jsInit);
-        if ($this->hasModel()) {
-            $js = <<<JS
-(function ($) {
-    "use strict";
-    $('#$id').parents('form').on('submit', function() {
-        $('#$id').val($('#$id').intlTelInput('getNumber'));
-    });
-})(jQuery);
-JS;
-            $this->view->registerJs($js);
-        }
+
     }
 
     /**

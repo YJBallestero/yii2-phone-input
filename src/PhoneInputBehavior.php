@@ -1,6 +1,6 @@
 <?php
 
-namespace yjballestero\extensions\phoneInput;
+namespace yjballestero\phoneInput;
 
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberFormat;
@@ -12,7 +12,7 @@ use yii\db\BaseActiveRecord;
 /**
  * Behavior of the phone input widget. Auto-formats the phone value for the JS-widget.
  *
- * @package yjballestero\extensions\phoneInput
+ * @package yjballestero\phoneInput
  *
  * @property-read \libphonenumber\PhoneNumberUtil $phoneUtil
  */
@@ -36,7 +36,7 @@ class PhoneInputBehavior extends AttributeBehavior
     public string $default_region;
 
     /**
-     * @var string
+     * @var string|null
      */
     public ?string $countryCodeAttribute = null;
 
